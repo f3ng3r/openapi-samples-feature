@@ -280,6 +280,37 @@ export function getBalancesInfo(accessToken, params) {
     });
 }
 
+// return allocation keys
+export function getAllocationKeys(accessToken, params) {
+    return services.getData({
+        serviceGroup: 'trade',
+        endPoint: 'v1/allocationkeys',
+        queryParams: params,
+        accessToken,
+    });
+}
+
+// return participating accounts for allocaiton key
+export function getAllocationKeyParticipatingAccounts(accessToken, params) {
+    return services.getData({
+        serviceGroup: 'trade',
+        endPoint: 'v1/allocationkeys/{AllocationKeyId}',
+        queryParams: params,
+        accessToken,
+    });
+}
+
+// create allocation key
+export function createAllocationKey(accessToken, allocationKey) {
+    return services.postData({
+        serviceGroup: 'trade',
+        endPoint: 'v1/allocationkeys',
+        queryParams: null,
+        body: allocationKey,
+        accessToken,
+    });
+}
+
 // create order subscription
 export function createOrderSubscription(accessToken, subscriptionArgs, onUpdate, onError) {
     return new Promise((resolve) => {
