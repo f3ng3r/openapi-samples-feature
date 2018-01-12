@@ -92,6 +92,14 @@ export function orderTypeDurationFormData(supportedOrderTypes, refHandler) {
     ];
 }
 
+export function allocationKeyIdFormData(currentOrder) {
+    return [{
+        label: 'AllocationKeyId',
+        value: currentOrder.AllocationKeyId,
+        componentClass: 'input',
+    }];
+}
+
 export function openCloseFormData() {
     return [{
         label: 'ToOpenClose',
@@ -132,6 +140,10 @@ export function stopLossFormData(stopLossPrice) {
 export function getUpdatedValues(event, order, ask, bid) {
     const value = event.target.value;
     switch (event.target.id) {
+        case 'AllocationKeyId':
+            order.currentOrder.AllocationKeyId = value;
+            break;
+
         case 'BuySell':
             order.currentOrder.BuySell = value;
             order.currentOrder.OrderPrice = order.currentOrder.BuySell === 'Buy' ? ask : bid;
@@ -289,4 +301,3 @@ export function validateOrder(order, props) {
 
     return isOrderOk;
 }
-

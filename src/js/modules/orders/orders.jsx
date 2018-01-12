@@ -23,6 +23,7 @@ class Orders extends React.PureComponent {
             // default values on UI.
             Uic: '',
             AssetType: '',
+            AllocationKeyId: '',
             OrderType: 'Market',
             OrderPrice: 0.0,
             OrderDuration: { DurationType: 'DayOrder' },

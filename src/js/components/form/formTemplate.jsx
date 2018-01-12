@@ -88,6 +88,7 @@ class FormTemplate extends React.PureComponent {
             stopLossFormData,
             openCloseFormData,
             takeProfitFormData,
+            allocationKeyIdFormData,
         } = this.props.queries;
 
         return (
@@ -118,6 +119,11 @@ class FormTemplate extends React.PureComponent {
                 {this.state.optionRoot &&
                 <FormGroupTemplate data={openCloseFormData()} onChange={this.handleValueChange}/>
                 }
+
+                {/* row4 with manual input of Allocation Key Id*/}
+                <FormGroupTemplate data={allocationKeyIdFormData(this.currentOrder)}
+                    onChange={this.handleValueChange}
+                />
 
                 <FormGroup>
                     {/* take profit section*/}
