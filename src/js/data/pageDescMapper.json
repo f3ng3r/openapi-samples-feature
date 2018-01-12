@@ -46,5 +46,9 @@
   "onboarding":{
     "title": "Onboarding",
     "desc": "Onboarding Form"
+  },
+  "allocationKeys":{
+    "title": "Allocation Keys",
+    "desc": "Shows how to create and manage allocation keys. These keys can be used to place orders under the Order endpoint."
   }
 }

@@ -9,7 +9,7 @@ import ClientPortfolio from 'src/js/modules/clientPortfolio';
 import OptionChain from 'src/js/modules/optionChain';
 import ChartPolling from 'src/js/modules/charts';
 import ChartStreaming from 'src/js/modules/chartStreaming';
-
+import AllocationKeys from 'src/js/modules/allocationKeys';
 import Orders from 'src/js/modules/orders';
 
 const resourcePage = (Comp, props) => (routeProps) => (
@@ -33,6 +33,7 @@ function Details(props) {
                 <Route path="/chartPolling" component={resourcePage(ChartPolling, props)}/>
                 <Route path="/chartStreaming" component={resourcePage(ChartStreaming, props)}/>
                 <Route path="/orders" component={resourcePage(Orders, props)}/>
+                <Route path="/allocationKeys" component={resourcePage(AllocationKeys, props)}/>
                 <Redirect exact path="/" to="/intro"/>
             </Switch>
         </div>
