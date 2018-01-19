@@ -46,7 +46,7 @@ class AllocationKeysTable extends React.PureComponent {
 
     handleAllocationKeyParticipatingAccountsReceived(response) {
         this.setState({
-            participatingAccountsInfo: response.ParticipantAccountsInfo,
+            participatingAccountsInfo: response.ParticipatingAccountsInfo,
         });
     }
 
