@@ -28,14 +28,30 @@ class AllocationKeysTable extends React.PureComponent {
     getParticipatingAccountsRows(key) {
         if (this.state.expandedKey === key) {
             if (this.state.participatingAccountsInfo) {
-                return _.map(this.state.participatingAccountsInfo, (account) => (
+
+                const table = [];
+
+                table.push((
+                    <tr key="header">
+                        <th></th>
+                        <th>Account Key</th>
+                        <th>Remainder</th>
+                        <th>Priority</th>
+                        <th>Unit</th>
+                    </tr>
+                ));
+
+                table.push(_.map(this.state.participatingAccountsInfo, (account) => (
                     <tr key={account.AccountKey}>
+                        <td></td>
                         <td>{account.AccountKey}</td>
-                        <td>{account.AcceptRemainderAmount}</td>
+                        <td>{account.AcceptRemainderAmount.toString()}</td>
                         <td>{account.Priority}</td>
                         <td>{account.UnitValue}</td>
                     </tr>
-                ));
+                )));
+
+                return table;
             }
             return (
                 <tr><td colSpan="5">Loading...</td></tr>
