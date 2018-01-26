@@ -1,19 +1,16 @@
 import React from 'react';
 import _ from 'lodash';
-
 import PropTypes from 'prop-types';
-
 import { Button, FormGroup, ControlLabel, FormControl, Col, Row } from 'react-bootstrap';
 
 const ParticipatingAccountsFields = ({ participatingAccountsInfo, onParticipatingAccountsInfoChange }) => {
-
     const addParticipatingAccount = () => {
         const updatedParticipatingAccountsInfo = participatingAccountsInfo;
         updatedParticipatingAccountsInfo.push({
-            'AccountKey': '',
-            'AcceptRemainderAmount': '',
-            'Priority': '',
-            'UnitValue': '',
+            AccountKey: '',
+            AcceptRemainderAmount: '',
+            Priority: '',
+            UnitValue: '',
         });
 
         onParticipatingAccountsInfoChange(updatedParticipatingAccountsInfo);

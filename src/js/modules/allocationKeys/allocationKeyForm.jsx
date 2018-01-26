@@ -1,28 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import { bindHandlers } from 'react-bind-handlers';
-
 import _ from 'lodash';
 import { getInfo } from 'src/js/utils/queries';
-
-import { Form, FormGroup, ControlLabel, FormControl, Button, Row, Col } from 'react-bootstrap';
-
+import {
+    Form,
+    FormGroup,
+    ControlLabel,
+    FormControl,
+    Button,
+    Row,
+    Col,
+} from 'react-bootstrap';
 import ParticipatingAccountsFields from './participatingAccountsFields';
 
 class AllocationKeyForm extends React.PureComponent {
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
 
         this.state = {
-            'Accounts': [],
-            'CurrentAllocationKey': {
-                'AllocationKeyName': '',
-                'AllocationUnitType': 'Unit',
-                'MarginHandling': 'Reduce',
-                'OneTime': true,
-                'OwnerAccountKey': '',
-                'ParticipatingAccountsInfo': [],
+            Accounts: [],
+            CurrentAllocationKey: {
+                AllocationKeyName: '',
+                AllocationUnitType: 'Unit',
+                MarginHandling: 'Reduce',
+                OneTime: true,
+                OwnerAccountKey: '',
+                ParticipatingAccountsInfo: [],
             },
 
         };
@@ -33,39 +37,44 @@ class AllocationKeyForm extends React.PureComponent {
         getInfo('getAccountInfo', this.props, null, this.handleAccountInfo);
     }
 
-    handleAccountInfo(response) {
-        const accounts = _.map(response.Data, (account) => {
-            return { name: account.AccountId, val: account.AccountKey };
+    handleAccountInfo({ Data }) {
+        const accounts = _.map(Data, ({ AccountId, AccountKey }) => {
+            return { name: AccountId, val: AccountKey };
         });
 
-        this.setState({
-            'Accounts': accounts,
-            'CurrentAllocationKey': {
-                ...this.state.CurrentAllocationKey,
-                'OwnerAccountKey': accounts[0].val,
-            },
+        this.setState(({ CurrentAllocationKey }) => {
+            return {
+                Accounts: accounts,
+                CurrentAllocationKey: {
+                    ...CurrentAllocationKey,
+                    OwnerAccountKey: accounts[0].val,
+                },
+            };
         });
     }
 
-    handleInputChange(event) {
-        const target = event.target;
+    handleInputChange({ target }) {
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
 
-        this.setState({
-            'CurrentAllocationKey': {
-                ...this.state.CurrentAllocationKey,
-                [name]: value,
-            },
+        this.setState(({ CurrentAllocationKey }) => {
+            return {
+                CurrentAllocationKey: {
+                    ...CurrentAllocationKey,
+                    [name]: value,
+                },
+            };
         });
     }
 
     handleParticipatingAccountsInfoChange(updatedParticipatingAccountsInfo) {
-        this.setState({
-            'CurrentAllocationKey': {
-                ...this.state.CurrentAllocationKey,
-                'ParticipatingAccountsInfo': updatedParticipatingAccountsInfo,
-            },
+        this.setState(({ CurrentAllocationKey }) => {
+            return {
+                CurrentAllocationKey: {
+                    ...CurrentAllocationKey,
+                    ParticipatingAccountsInfo: updatedParticipatingAccountsInfo,
+                },
+            };
         });
     }
 
@@ -78,8 +87,6 @@ class AllocationKeyForm extends React.PureComponent {
         if (kind === 'select') {
             const optionsFields = _.map(options, (option) => (<option key={option.val} value={option.val}>{option.name}</option>));
 
-            console.log(optionsFields);
-
             control = (
                 <FormControl
                     componentClass="select"
@@ -87,7 +94,7 @@ class AllocationKeyForm extends React.PureComponent {
                     name={key}
                     onChange={this.handleInputChange}
                 >
-                    { optionsFields }
+                    {optionsFields}
                 </FormControl>
             );
         } else {
@@ -104,46 +111,52 @@ class AllocationKeyForm extends React.PureComponent {
         return (
             <FormGroup>
                 <ControlLabel>{label}</ControlLabel>
-                { control }
+                {control}
             </FormGroup>
         );
     }
 
     render() {
+        const allocationKeyName = this.getFormElement('Name', 'AllocationKeyName');
+        const allocationUnitType = this.getFormElement(
+            'Unit Type',
+            'AllocationUnitType',
+            'select',
+            [{ name: 'Unit', val: 'Unit' }, { name: 'Percentage', val: 'Percentage' }]
+        );
+        const marginHandling = this.getFormElement(
+            'Margin Handling',
+            'MarginHandling',
+            'select',
+            [{ name: 'Reduce', val: 'Reduce' }, { name: 'Reject', val: 'Reject' }]
+        );
+        const oneTime = this.getFormElement(
+            'One Time',
+            'OneTime',
+            'select',
+            [{ name: 'True', val: true }, { name: 'False', val: false }]
+        );
+        const ownerAccountKey = this.getFormElement(
+            'Owner Account Key',
+            'OwnerAccountKey',
+            'select',
+            this.state.Accounts
+        );
+        const { ParticipatingAccountsInfo } = this.state.CurrentAllocationKey;
         return (
             <div>
                 <Form>
                     <Row>
                         <Col md={4}>
-                            { this.getFormElement('Name', 'AllocationKeyName') }
-                            { this.getFormElement(
-                                'Unit Type',
-                                'AllocationUnitType',
-                                'select',
-                                [{ name: 'Unit', val: 'Unit' }, { name: 'Percentage', val: 'Percentage' }]
-                            ) }
-                            { this.getFormElement(
-                                'Margin Handling',
-                                'MarginHandling',
-                                'select',
-                                [{ name: 'Reduce', val: 'Reduce' }, { name: 'Reject', val: 'Reject' }]
-                            ) }
-                            { this.getFormElement(
-                                'One Time',
-                                'OneTime',
-                                'select',
-                                [{ name: 'True', val: true }, { name: 'False', val: false }]
-                            ) }
-                            { this.getFormElement(
-                                'Owner Account Key',
-                                'OwnerAccountKey',
-                                'select',
-                                this.state.Accounts
-                            ) }
+                            {allocationKeyName}
+                            {allocationUnitType}
+                            {marginHandling}
+                            {oneTime}
+                            {ownerAccountKey}
                         </Col>
                         <Col md={8}>
                             <ParticipatingAccountsFields
-                                participatingAccountsInfo={this.state.CurrentAllocationKey.ParticipatingAccountsInfo}
+                                participatingAccountsInfo={ParticipatingAccountsInfo}
                                 onParticipatingAccountsInfoChange={this.handleParticipatingAccountsInfoChange}
                             />
                         </Col>
@@ -151,7 +164,8 @@ class AllocationKeyForm extends React.PureComponent {
                     <Row>
                         <Col md={12}>
                             <Button bsStyle="primary" onClick={this.handleCreateAllocationKey}>
-                                      Create Allocation Key</Button>
+                                Create Allocation Key
+                            </Button>
                         </Col>
                     </Row>
                 </Form>

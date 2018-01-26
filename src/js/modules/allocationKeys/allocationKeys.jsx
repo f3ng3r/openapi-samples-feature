@@ -1,22 +1,18 @@
 import React from 'react';
 import { bindHandlers } from 'react-bind-handlers';
-
 import _ from 'lodash';
 import { Row, Panel } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-
 import { getInfo } from 'src/js/utils/queries';
 import * as queries from './queries';
-
 import DetailsHeader from 'src/js/components/detailsHeader';
 import Error from 'src/js/modules/error';
-
 import AllocationKeyForm from './allocationKeyForm';
 import AllocationKeysTable from './allocationKeysTable';
 
 class AllocationKeys extends React.PureComponent {
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
 
         this.state = {
             allocationKeys: [],
@@ -46,10 +42,6 @@ class AllocationKeys extends React.PureComponent {
         this.setState({
             allocationKeys: response.Data,
         });
-    }
-
-    handleAllocationKeyParticipatingAccountsReceived(response) {
-        console.log(response);
     }
 
     handleCreateAllocationKey(allocationKey) {
@@ -103,8 +95,12 @@ class AllocationKeys extends React.PureComponent {
     }
 }
 
-AllocationKeys.propTypes = { match: PropTypes.object };
+AllocationKeys.propTypes = {
+    match: PropTypes.object,
+};
 
-AllocationKeys.defaultProps = { match: {} };
+AllocationKeys.defaultProps = {
+    match: {},
+};
 
 export default bindHandlers(AllocationKeys);

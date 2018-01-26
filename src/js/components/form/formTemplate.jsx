@@ -102,26 +102,34 @@ class FormTemplate extends React.PureComponent {
 
                 {/* options row which shows only when some option is selected*/}
                 {this.state.optionRoot &&
-                <Options {...this.props} optionRoot={optionRoot}
+                <Options
+                    {...this.props}
+                    optionRoot={optionRoot}
                     onInstrumentSelected={handleInstrumentChange}
                 />
                 }
 
                 {/* row2 with manual input ask/bid prices*/}
-                <FormGroupTemplate data={getBuySellFormData(this.currentOrder, instrumentInfo)}
+                <FormGroupTemplate
+                    data={getBuySellFormData(this.currentOrder, instrumentInfo)}
                     onChange={this.handleValueChange}
                 />
 
                 {/* row3 with manual input*/}
-                <FormGroupTemplate data={orderTypeDurationFormData(supportedOrderTypes, handleRef)}
+                <FormGroupTemplate
+                    data={orderTypeDurationFormData(supportedOrderTypes, handleRef)}
                     onChange={this.handleValueChange}
                 />
                 {this.state.optionRoot &&
-                <FormGroupTemplate data={openCloseFormData()} onChange={this.handleValueChange}/>
+                <FormGroupTemplate
+                    data={openCloseFormData()}
+                    onChange={this.handleValueChange}
+                />
                 }
 
                 {/* row4 with manual input of Allocation Key Id*/}
-                <FormGroupTemplate data={allocationKeyIdFormData(this.currentOrder)}
+                <FormGroupTemplate
+                    data={allocationKeyIdFormData(this.currentOrder)}
                     onChange={this.handleValueChange}
                 />
 

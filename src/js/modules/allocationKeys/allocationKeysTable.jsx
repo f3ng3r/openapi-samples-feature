@@ -1,15 +1,13 @@
 import React from 'react';
 import { bindHandlers } from 'react-bind-handlers';
-
 import _ from 'lodash';
 import { Table, Glyphicon } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 class AllocationKeysTable extends React.PureComponent {
-
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
 
         this.state = {
             expandedKey: false,
@@ -18,9 +16,11 @@ class AllocationKeysTable extends React.PureComponent {
     }
 
     handleToggleDetails(key) {
-        this.setState({
-            expandedKey: (this.state.expandedKey === key ? false : key),
-            participatingAccountsInfo: null,
+        this.setState(({ expandedKey }) => {
+            return {
+                expandedKey: (expandedKey === key ? false : key),
+                participatingAccountsInfo: null,
+            };
         });
         this.props.fetchParticipatingAccounts(this.props.allocationKeys[key].AllocationKeyId, this.handleAllocationKeyParticipatingAccountsReceived);
     }
@@ -80,7 +80,7 @@ class AllocationKeysTable extends React.PureComponent {
                     })}
                     /></td>
                 </tr>
-                { this.getParticipatingAccountsRows(key) }
+                {this.getParticipatingAccountsRows(key)}
             </tbody>
         ));
     }
@@ -103,10 +103,13 @@ class AllocationKeysTable extends React.PureComponent {
 
 }
 
-AllocationKeysTable.propTypes = { allocationKeys: PropTypes.array,
+AllocationKeysTable.propTypes = {
+    allocationKeys: PropTypes.array,
     fetchParticipatingAccounts: PropTypes.func,
 };
 
-AllocationKeysTable.defaultProps = { allocationKeys: [] };
+AllocationKeysTable.defaultProps = {
+    allocationKeys: [],
+};
 
 export default bindHandlers(AllocationKeysTable);
